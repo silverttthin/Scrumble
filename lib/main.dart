@@ -34,6 +34,10 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Colors.blueAccent,
+        selectedFontSize: 14.0,
+        unselectedFontSize: 12.0,
+        enableFeedback: false,
         onTap: (int index){
           setState((){
             _selectedIndex = index;
