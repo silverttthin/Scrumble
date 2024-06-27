@@ -8,8 +8,27 @@ class tab1 extends StatefulWidget {
 }
 
 class _tab1State extends State<tab1> {
+
+  List<Widget> contact = [
+    Container(
+      height: 50,
+      child: Center(child: Text('010-1234-5678'),),
+    ),
+    Container(
+      height: 50,
+      child: Center(child: Text('010-6490-2661'),),
+    ),
+    Container(
+      height: 50,
+      child: Center(child: Text('010-1232-1111'),),
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return ListView(
+      padding: const EdgeInsets.all(8),
+      children: contact,
+    );
   }
 }
