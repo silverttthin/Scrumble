@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:madcamp_week1_mission/album.dart';
-import 'package:madcamp_week1_mission/grid_photo.dart';
+import 'package:madcamp_week1_mission/widget/album.dart';
+import 'package:madcamp_week1_mission/widget/grid_photo.dart';
 import 'package:photo_manager/photo_manager.dart';
 
 class tab2 extends StatefulWidget {

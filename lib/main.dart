@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:madcamp_week1_mission/colors.dart';
-import 'package:madcamp_week1_mission/scrum_add_page.dart';
-import 'package:madcamp_week1_mission/tab1.dart';
-import 'package:madcamp_week1_mission/tab2.dart';
+import 'package:madcamp_week1_mission/constants/colors.dart';
+import 'package:madcamp_week1_mission/page/scrum_add_page.dart';
+import 'package:madcamp_week1_mission/page/tab1.dart';
+import 'package:madcamp_week1_mission/page/tab2.dart';
 
 void main() {
   runApp(MyApp());
