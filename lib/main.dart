@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:madcamp_week1_mission/colors.dart';
+import 'package:madcamp_week1_mission/scrum_add_page.dart';
 import 'package:madcamp_week1_mission/tab1.dart';
 import 'package:madcamp_week1_mission/tab2.dart';
 
@@ -11,6 +13,7 @@ class MyApp extends StatelessWidget{
   Widget build(BuildContext context){
     return MaterialApp(
       home: HomePage(),
+
     );
   }
 }
@@ -33,6 +36,19 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _pages[_selectedIndex],
+      appBar: AppBar(
+        title: Text('SCRUMBLE'),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: MadColor.mainColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(100)
+        ),
+        child: Icon(Icons.add_outlined, color: Colors.white,),
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => ScrumAddPage()));
+        },
+      ),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Colors.blueAccent,
         selectedFontSize: 14.0,
