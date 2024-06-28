@@ -41,7 +41,7 @@ class _tab1State extends State<tab1> {
               padding: const EdgeInsets.only(top: 16, left: 4),
                 child: Text(posts[index]['author']!, style: TextStyle(
                     fontSize: 12,
-                    color: const Color(0x8E8989).withOpacity(0.8),
+                    color: const Color(0xFF8E8989).withOpacity(0.8),
                 )),
             ),
 
