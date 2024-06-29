@@ -39,16 +39,6 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text('SCRUMBLE'),
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: MadColor.mainColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(100)
-        ),
-        child: Icon(Icons.add_outlined, color: Colors.white,),
-        onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => ScrumAddPage()));
-        },
-      ),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: Colors.blueAccent,
         selectedFontSize: 14.0,

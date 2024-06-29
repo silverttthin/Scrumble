@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:madcamp_week1_mission/constants/colors.dart';
+import 'package:madcamp_week1_mission/page/scrum_add_page.dart';
+import 'package:madcamp_week1_mission/page/scrum_page.dart';
 
 class tab1 extends StatefulWidget {
   const tab1({super.key});
@@ -25,58 +28,75 @@ class _tab1State extends State<tab1> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      padding: const EdgeInsets.all(15.0),
-      itemCount: posts.length,
-      itemBuilder: (context, index){
-        return Column(
-          children: [
-            Card(
-              // margin: const EdgeInsets.all(16.0),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-              elevation: 3, // 카드 하단 그림자 크기
-              shadowColor: Colors.black.withOpacity(0.7),
-              child: ListTile(
-                leading: Image.network(posts[index]['image']!, width: 60, height: 60,), // 팀 대표 아이콘
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: MadColor.mainColor,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(100)
+        ),
+        child: Icon(Icons.add_outlined, color: Colors.white,),
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => ScrumAddPage()));
+        },
+      ),
+      body: ListView.builder(
+        padding: const EdgeInsets.all(15.0),
+        itemCount: posts.length,
+        itemBuilder: (context, index){
+          return Column(
+            children: [
+              Card(
+                // margin: const EdgeInsets.all(16.0),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                elevation: 3, // 카드 하단 그림자 크기
+                shadowColor: Colors.black.withOpacity(0.7),
+                child: InkWell(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => ScrumPage()));
+                  },
+                  child: ListTile(
+                    leading: Image.network(posts[index]['image']!, width: 60, height: 60,), // 팀 대표 아이콘
 
-                title: Padding(
-                  padding: const EdgeInsets.only(top: 16, left: 4),
-                    child: Text(posts[index]['author']!, style: TextStyle(
-                        fontSize: 12,
-                        color: const Color(0xFF8E8989).withOpacity(0.8),
-                    )),
-                ),
+                    title: Padding(
+                      padding: const EdgeInsets.only(top: 16, left: 4),
+                        child: Text(posts[index]['author']!, style: TextStyle(
+                            fontSize: 12,
+                            color: const Color(0xFF8E8989).withOpacity(0.8),
+                        )),
+                    ),
 
-                subtitle: Transform.translate(
-                  offset: const Offset(0, -4),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(posts[index]['title']!,
-                        style: const TextStyle(
-                          fontSize: 22,
-                          fontWeight : FontWeight.bold,
-                        ),),
+                    subtitle: Transform.translate(
+                      offset: const Offset(0, -4),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(posts[index]['title']!,
+                            style: const TextStyle(
+                              fontSize: 22,
+                              fontWeight : FontWeight.bold,
+                            ),),
 
 
-                        Text(posts[index]['content']!, maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.black.withOpacity(0.7),
-                        ),),
-                        const SizedBox(height: 16,)
-                      ],
+                            Text(posts[index]['content']!, maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.black.withOpacity(0.7),
+                            ),),
+                            const SizedBox(height: 16,)
+                          ],
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
-            SizedBox(
-              height: 15,
-            )
-          ],
-        );
-      },
+              SizedBox(
+                height: 15,
+              )
+            ],
+          );
+        },
+      ),
     );
   }
 }
