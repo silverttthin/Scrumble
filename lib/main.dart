@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:madcamp_week1_mission/Model/human_provider.dart';
 import 'package:madcamp_week1_mission/Model/scrum.dart';
 import 'package:madcamp_week1_mission/Model/scrum_provider.dart';
 import 'package:madcamp_week1_mission/constants/colors.dart';
@@ -29,6 +30,8 @@ class MyApp extends StatelessWidget{
           value: db.getNotes(),
           initialData: [],
         ),
+        ChangeNotifierProvider(
+            create: (BuildContext context) => HumanModel()),
       ],
       child: MaterialApp(
         home: HomePage(),
@@ -54,6 +57,9 @@ class _HomePageState extends State<HomePage> {
   
   @override
   Widget build(BuildContext context) {
+    final humanData = Provider.of<HumanModel>(context);
+    humanData.getHuman();
+
     return Scaffold(
       body: _pages[_selectedIndex],
       appBar: AppBar(

@@ -1,7 +1,10 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:madcamp_week1_mission/Model/human.dart';
+import 'package:madcamp_week1_mission/Model/human_provider.dart';
 import 'package:madcamp_week1_mission/constants/colors.dart';
+import 'package:provider/provider.dart';
 
 class ScrumAddPage extends StatefulWidget {
   const ScrumAddPage({super.key});
@@ -19,6 +22,8 @@ class _ScrumAddPageState extends State<ScrumAddPage> {
 
   @override
   Widget build(BuildContext context) {
+    final humanData = Provider.of<HumanModel>(context);
+
     return GestureDetector(
       onTap: () {
         FocusScopeNode currentFocus = FocusScope.of(context);
@@ -63,6 +68,8 @@ class _ScrumAddPageState extends State<ScrumAddPage> {
                         height: 40,
                         child: IconButton(
                           onPressed: (){
+
+
                             showDialog(
                                 context: context,
                                 barrierDismissible: true,
@@ -83,12 +90,37 @@ class _ScrumAddPageState extends State<ScrumAddPage> {
                                     content: SizedBox(
                                       height: 250,
                                       width: 300,
-                                      // child:
-                                        // ListView.builder(
-                                        //   scrollDirection: Axis.vertical,
-                                        //   padding: EdgeInsets.all(8),
-                                        //   itemCount: ,
-                                        // )
+                                      child:
+                                        ListView.builder(
+                                          scrollDirection: Axis.vertical,
+                                          // padding: EdgeInsets.all(8),
+                                          itemCount: humanData.humanList.length,
+                                          itemBuilder: (context, index){
+                                            return Card(
+                                              child: ListTile(
+                                                leading: Image(
+                                                  width: 30,
+                                                  image: AssetImage(
+                                                      'assets/icons/${humanData.humanList[index].id}.png'),
+                                                ),
+                                                title: Text(humanData.humanList[index].name, style: TextStyle(fontWeight: FontWeight.bold),),
+                                                subtitle: Text(humanData.humanList[index].call, style: TextStyle(color: Color(0xff444444)),),
+                                                onTap: (){},
+                                              ),
+                                            );
+
+                                            return Row(
+                                              children: [
+                                                Image(
+                                                  width: 30,
+                                                  image: AssetImage(
+                                                      'assets/icons/${humanData.humanList[index].id}.png'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                          // separatorBuilder: (BuildContext context, int index) => const Divider(),
+                                        )
                                     ),
                                     actions: <Widget>[
                                       new ElevatedButton(
