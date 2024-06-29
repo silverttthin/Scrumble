@@ -2,7 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 class Scrum {
-  File image;
+  // File image;
+  String icon;
   String summary;
   String yesterday;
   String today;
@@ -10,7 +11,8 @@ class Scrum {
   int team;
 
   Scrum({
-    required this.image,
+    // required this.image,
+    required this.icon,
     required this.summary,
     required this.yesterday,
     required this.today,
@@ -28,7 +30,8 @@ class Scrum {
   // instance -> json
   Map<String, dynamic> toJson() {
     return {
-      'image': _encodeImageToBase64(image),
+      // 'image': _encodeImageToBase64(image),
+      'icon': icon,
       'summary': summary,
       'yesterday': yesterday,
       'today': today,
@@ -40,12 +43,13 @@ class Scrum {
   // JSON -> instance
   factory Scrum.fromJson(json) {
 
-    String base64Image = json['image'];
-    File imageFile = File('decoded_image.jpg');
-    imageFile.writeAsBytesSync(base64Decode(base64Image));
+    // String base64Image = json['image'];
+    // File imageFile = File('decoded_image.jpg');
+    // imageFile.writeAsBytesSync(base64Decode(base64Image));
 
     return Scrum(
-      image: imageFile,
+      // image: imageFile,
+      icon: json['icon'],
       summary: json['summary'],
       yesterday: json['yesterday'],
       today: json['today'],

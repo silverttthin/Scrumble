@@ -1,19 +1,39 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:madcamp_week1_mission/Model/scrum.dart';
+import 'package:madcamp_week1_mission/Model/scrum_provider.dart';
 import 'package:madcamp_week1_mission/constants/colors.dart';
+import 'package:madcamp_week1_mission/firebase_options.dart';
 import 'package:madcamp_week1_mission/page/scrum_add_page.dart';
+import 'package:madcamp_week1_mission/page/scrum_page.dart';
 import 'package:madcamp_week1_mission/page/tab1.dart';
 import 'package:madcamp_week1_mission/page/tab2.dart';
+import 'package:provider/provider.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform
+  );
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget{
+  ScrumProvider db = ScrumProvider();
+
   @override
   Widget build(BuildContext context){
-    return MaterialApp(
-      home: HomePage(),
-      theme: ThemeData(scaffoldBackgroundColor: MadColor.backgroudColor),
+    return MultiProvider(
+      providers: [
+        StreamProvider<List<Scrum>>.value(
+          value: db.getNotes(),
+          initialData: [],
+        ),
+      ],
+      child: MaterialApp(
+        home: HomePage(),
+        theme: ThemeData(scaffoldBackgroundColor: MadColor.backgroudColor),
+      ),
     );
   }
 }

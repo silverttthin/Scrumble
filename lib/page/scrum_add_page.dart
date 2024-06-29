@@ -1,5 +1,6 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:madcamp_week1_mission/constants/colors.dart';
 
 class ScrumAddPage extends StatefulWidget {
@@ -80,13 +81,14 @@ class _ScrumAddPageState extends State<ScrumAddPage> {
                                       ],
                                     ),
                                     content: SizedBox(
-                                      height: 200,
+                                      height: 250,
                                       width: 300,
-                                      child: SingleChildScrollView(
-                                        child: Column(
-                                          // children: dialogTag,
-                                        ),
-                                      ),
+                                      // child:
+                                        // ListView.builder(
+                                        //   scrollDirection: Axis.vertical,
+                                        //   padding: EdgeInsets.all(8),
+                                        //   itemCount: ,
+                                        // )
                                     ),
                                     actions: <Widget>[
                                       new ElevatedButton(
