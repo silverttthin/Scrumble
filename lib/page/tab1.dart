@@ -71,6 +71,7 @@ class _tab1State extends State<tab1> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
+                            overflow: TextOverflow.ellipsis,
                             scrumData[index].summary,
                             style: const TextStyle(
                               fontSize: 22,
