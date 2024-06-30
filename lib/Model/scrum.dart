@@ -9,6 +9,7 @@ class Scrum {
   String today;
   String learned;
   int team;
+  int date;
 
   Scrum({
     // required this.image,
@@ -18,6 +19,7 @@ class Scrum {
     required this.today,
     required this.learned,
     required this.team,
+    required this.date,
   });
 
   // 이미지 파일을 base64로 인코딩
@@ -37,6 +39,7 @@ class Scrum {
       'today': today,
       'learned': learned,
       'team': team,
+      'date': date
     };
   }
 
@@ -55,6 +58,7 @@ class Scrum {
       today: json['today'],
       learned: json['learned'],
       team: json['team'],
+      date: json['date'],
     );
   }
 }
