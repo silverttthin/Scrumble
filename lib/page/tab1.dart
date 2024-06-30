@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:madcamp_week1_mission/Model/scrum.dart';
+import 'package:madcamp_week1_mission/Model/scrum_add_provider.dart';
 import 'package:madcamp_week1_mission/constants/colors.dart';
 import 'package:madcamp_week1_mission/page/scrum_add_page.dart';
 import 'package:madcamp_week1_mission/page/scrum_page.dart';
@@ -15,8 +16,9 @@ class tab1 extends StatefulWidget {
 class _tab1State extends State<tab1> {
   @override
   Widget build(BuildContext context) {
+    final scrumAddProvider = Provider.of<ScrumAddProvideer>(context);
     final scrumData = Provider.of<List<Scrum>>(context);
-    print(scrumData.length);
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         backgroundColor: MadColor.mainColor,
@@ -26,6 +28,7 @@ class _tab1State extends State<tab1> {
           color: Colors.white,
         ),
         onPressed: () {
+          scrumAddProvider.initialize();
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => ScrumAddPage()));
         },
@@ -52,8 +55,7 @@ class _tab1State extends State<tab1> {
                       width: 60,
                       image: AssetImage(
                           'assets/icons/${scrumData[index].icon}.png'),
-                    ), // 팀 대표 아이콘
-
+                    ),
                     title: Padding(
                       padding: const EdgeInsets.only(top: 5, left: 3),
                       child: Text(scrumData[index].team.toString(),

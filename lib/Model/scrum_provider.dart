@@ -7,7 +7,7 @@ class ScrumProvider extends ChangeNotifier{
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   Stream<List<Scrum>> getNotes() {
-    return FirebaseFirestore.instance.collection('scrums').snapshots()
+    return FirebaseFirestore.instance.collection('scrums').orderBy('date', descending: true).snapshots()
         .map((list) =>
         list.docs.map((doc) => Scrum.fromJson(doc.data())).toList());
   }
