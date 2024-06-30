@@ -1,8 +1,15 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:madcamp_week1_mission/Model/human.dart';
 import 'package:madcamp_week1_mission/Model/human_provider.dart';
+import 'package:madcamp_week1_mission/Model/scrum.dart';
+import 'package:madcamp_week1_mission/Model/scrum_add_provider.dart';
 import 'package:madcamp_week1_mission/constants/colors.dart';
 import 'package:provider/provider.dart';
 
@@ -23,6 +30,7 @@ class _ScrumAddPageState extends State<ScrumAddPage> {
   @override
   Widget build(BuildContext context) {
     final humanData = Provider.of<HumanModel>(context);
+    final scrumAddProvider = Provider.of<ScrumAddProvideer>(context);
 
     return GestureDetector(
       onTap: () {
@@ -55,9 +63,14 @@ class _ScrumAddPageState extends State<ScrumAddPage> {
                       Row(
                         children: [
                           SizedBox(width: 15,),
+                          scrumAddProvider.name == ""?
                           Text('작성자',
                             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.grey),
-                          ),
+                          ):
+                          Text(scrumAddProvider.name,
+                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: MadColor.mainColor),
+                          )
+                          ,
                           SizedBox(width: 7,),
                           Text('님의 스크럼',
                             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -105,18 +118,11 @@ class _ScrumAddPageState extends State<ScrumAddPage> {
                                                 ),
                                                 title: Text(humanData.humanList[index].name, style: TextStyle(fontWeight: FontWeight.bold),),
                                                 subtitle: Text(humanData.humanList[index].call, style: TextStyle(color: Color(0xff444444)),),
-                                                onTap: (){},
+                                                onTap: (){
+                                                  scrumAddProvider.setPeople(humanData.humanList[index].name, humanData.humanList[index].id);
+                                                  Navigator.pop(context);
+                                                },
                                               ),
-                                            );
-
-                                            return Row(
-                                              children: [
-                                                Image(
-                                                  width: 30,
-                                                  image: AssetImage(
-                                                      'assets/icons/${humanData.humanList[index].id}.png'),
-                                                ),
-                                              ],
                                             );
                                           },
                                           // separatorBuilder: (BuildContext context, int index) => const Divider(),
@@ -143,7 +149,8 @@ class _ScrumAddPageState extends State<ScrumAddPage> {
                   SizedBox(height: 5,),
                   Padding(
                     padding: const EdgeInsets.all(10.0),
-                    child: DottedBorder(
+                    child: scrumAddProvider.image == null?
+                    DottedBorder(
                       color: MadColor.mainColor,
                       dashPattern: [19],
                       borderType: BorderType.RRect,
@@ -161,7 +168,9 @@ class _ScrumAddPageState extends State<ScrumAddPage> {
                         child: Material(
                           color: Colors.transparent,
                           child: InkWell(
-                            onTap: (){},
+                            onTap: (){
+                              scrumAddProvider.getImage(ImageSource.gallery);
+                            },
                             child: Container(
                               width: double.maxFinite,
                               height: 200,
@@ -184,9 +193,29 @@ class _ScrumAddPageState extends State<ScrumAddPage> {
                                     ),
                                   )
                                 ],
-                              ),
-                            ),
+                              )
+                            )
                           ),
+                        ),
+                      ),
+                    ):
+                    InkWell(
+                      onTap: (){
+                        scrumAddProvider.getImage(ImageSource.gallery);
+                      },
+                      child: Container(
+                        width: double.maxFinite,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.black.withOpacity(0.2),
+                                  offset: Offset(0, 5),
+                                  blurRadius: 5)
+                            ]),
+                        child: ClipRRect(
+                          child: Image.file(File(scrumAddProvider.image!.path), fit: BoxFit.fill,),
+                          borderRadius: BorderRadius.circular(12),
                         ),
                       ),
                     ),
@@ -414,21 +443,82 @@ class _ScrumAddPageState extends State<ScrumAddPage> {
                     ),
                     child: Material(
                       color: Colors.transparent,
-                      child: InkWell(
-                        onTap: () {},
-                        child: Container(
-                          width: double.maxFinite,
-                          height: 50,
-                          child: Center(
-                            child: Text(
-                              '완료',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white
-                              ),
-                            )),
-                        ),
+                      child: StreamBuilder<DocumentSnapshot>(
+                        stream: FirebaseFirestore.instance
+                            .collection('people')
+                            .doc('people_to_team')
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState == ConnectionState.waiting) {
+                            return Container(
+                              width: double.maxFinite,
+                              height: 50,
+                              child: Center(
+                                  child: Text(
+                                    '완료',
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white
+                                    ),
+                                  )),
+                            );
+                          }
+                          var teamData = snapshot.data!.data() as Map<String, dynamic>;
+
+                          return InkWell(
+                            onTap: () {
+                              FocusScope.of(context).requestFocus(new FocusNode());
+                              if(scrumAddProvider.name == ""){
+                                Fluttertoast.showToast(
+                                    msg: "작성자를 선택해 주세요",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.CENTER,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: Colors.red,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0
+                                );
+
+                                return;
+
+                              }
+
+                              if (_formKey.currentState!.validate()) {
+                                Scrum newScrum = Scrum(
+                                    icon: scrumAddProvider.name_id.toString(),
+                                    summary: _summaryController.text,
+                                    yesterday: _yesterdayController.text,
+                                    today: _todayController.text,
+                                    learned: _learnedController.text,
+                                    team: teamData[scrumAddProvider.name],
+                                    date: parsing_timeToint()
+                                );
+                                CollectionReference contents = FirebaseFirestore.instance
+                                    .collection('scrums');
+                                contents.add(newScrum.toJson());
+
+                                Navigator.pop(context);
+
+                              }
+
+                          
+                            },
+                            child: Container(
+                              width: double.maxFinite,
+                              height: 50,
+                              child: Center(
+                                child: Text(
+                                  '완료',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white
+                                  ),
+                                )),
+                            ),
+                          );
+                        }
                       ),
                     ),
                   )
@@ -439,5 +529,26 @@ class _ScrumAddPageState extends State<ScrumAddPage> {
         ),
       ),
     );
+  }
+
+  int parsing_timeToint() {
+    // 현재 시간 가져오기
+    DateTime now = DateTime.now();
+
+    // 연도, 월, 일, 시, 분을 각각 문자열로 변환하고 필요한 자리수를 맞춤
+    String year = now.year.toString();
+    String month = now.month.toString().padLeft(2, '0');
+    String day = now.day.toString().padLeft(2, '0');
+    String hour = now.hour.toString().padLeft(2, '0');
+    String minute = now.minute.toString().padLeft(2, '0');
+
+    // 문자열을 결합하여 원하는 형식으로 변환
+    String formattedDateTime = year + month + day + hour + minute;
+
+    // 문자열을 정수로 변환
+    int dateTimeInt = int.parse(formattedDateTime);
+
+    // 결과 출력
+    return dateTimeInt; // 예: 202406291524
   }
 }
