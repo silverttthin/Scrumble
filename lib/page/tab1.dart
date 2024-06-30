@@ -58,7 +58,7 @@ class _tab1State extends State<tab1> {
                           'assets/icons/${scrumData[index].icon}.png'),
                     ),
                     title: Padding(
-                      padding: const EdgeInsets.only(top: 5, left: 3),
+                      padding: const EdgeInsets.only(top: 5),
                       child: StreamBuilder<DocumentSnapshot>(
                         stream: FirebaseFirestore.instance
                             .collection('people')
