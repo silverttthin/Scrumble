@@ -11,6 +11,7 @@ class Scrum {
   int team;
   int date;
 
+
   Scrum({
     // required this.image,
     required this.icon,
