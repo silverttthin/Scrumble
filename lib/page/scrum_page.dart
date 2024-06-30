@@ -142,7 +142,7 @@ class _ScrumPageState extends State<ScrumPage> {
                                   Text(
                                     scrumData[index].yesterday,
                                     style:
-                                        TextStyle(fontWeight: FontWeight.w800),
+                                        TextStyle(fontWeight: FontWeight.w400),
                                   ),
                                   SizedBox(
                                     height: 30,
@@ -157,7 +157,7 @@ class _ScrumPageState extends State<ScrumPage> {
                                   Text(
                                     scrumData[index].today,
                                     style:
-                                        TextStyle(fontWeight: FontWeight.w800),
+                                        TextStyle(fontWeight: FontWeight.w400),
                                   ),
                                   SizedBox(
                                     height: 30,
@@ -172,7 +172,7 @@ class _ScrumPageState extends State<ScrumPage> {
                                   Text(
                                     scrumData[index].learned,
                                     style:
-                                        TextStyle(fontWeight: FontWeight.w500),
+                                        TextStyle(fontWeight: FontWeight.w400),
                                   ),
 
                                   SizedBox(height: 100,)

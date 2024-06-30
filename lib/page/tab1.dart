@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:madcamp_week1_mission/Model/scrum.dart';
 import 'package:madcamp_week1_mission/Model/scrum_add_provider.dart';
@@ -58,11 +59,28 @@ class _tab1State extends State<tab1> {
                     ),
                     title: Padding(
                       padding: const EdgeInsets.only(top: 5, left: 3),
-                      child: Text(scrumData[index].team.toString(),
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: const Color(0xFF8E8989).withOpacity(0.8),
-                          )),
+                      child: StreamBuilder<DocumentSnapshot>(
+                        stream: FirebaseFirestore.instance
+                            .collection('people')
+                            .doc('team_to_people')
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState == ConnectionState.waiting) {
+                            return Text("",
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: const Color(0xFF666666),
+                                ));
+                          }
+                          var teamData = snapshot.data!.data() as Map<String, dynamic>;
+
+                          return Text(teamData[scrumData[index].team.toString()],
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: const Color(0xFF666666),
+                              ));
+                        }
+                      ),
                     ),
 
                     subtitle: Transform.translate(
