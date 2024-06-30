@@ -82,18 +82,22 @@ class _ScrumPageState extends State<ScrumPage> {
 
                               // 이름과 작성일 들어가는 Row 위젯
                               Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     teamData[scrumData[index].team.toString()],
                                     style: TextStyle(
-                                      fontSize: 16,
+                                      fontSize: 14,
                                     ),
                                   ),
                                   SizedBox(
                                     width: 20,
                                   ),
-                                  Text('int 날짜를 포멧팅한 값을 넣어야함')
-                                  //Text(scrumData[index].date) 
+
+                                  Text(formatDateTime(scrumData[index].date),
+                                  style: TextStyle(
+                                    fontSize: 14
+                                  ),)
                                 ],
                               ),
 
@@ -132,13 +136,13 @@ class _ScrumPageState extends State<ScrumPage> {
                                     "어제까지 한 일",
                                     style: TextStyle(
                                       fontSize: 20,
-                                      fontWeight: FontWeight.w600,
+                                      fontWeight: FontWeight.w800,
                                     ),
                                   ),
                                   Text(
                                     scrumData[index].yesterday,
                                     style:
-                                        TextStyle(fontWeight: FontWeight.w500),
+                                        TextStyle(fontWeight: FontWeight.w800),
                                   ),
                                   SizedBox(
                                     height: 30,
@@ -147,13 +151,13 @@ class _ScrumPageState extends State<ScrumPage> {
                                     "오늘 할 일",
                                     style: TextStyle(
                                       fontSize: 20,
-                                      fontWeight: FontWeight.w600,
+                                      fontWeight: FontWeight.w800,
                                     ),
                                   ),
                                   Text(
                                     scrumData[index].today,
                                     style:
-                                        TextStyle(fontWeight: FontWeight.w500),
+                                        TextStyle(fontWeight: FontWeight.w800),
                                   ),
                                   SizedBox(
                                     height: 30,
@@ -162,7 +166,7 @@ class _ScrumPageState extends State<ScrumPage> {
                                     "궁금한/필요한/알아낸 것",
                                     style: TextStyle(
                                       fontSize: 20,
-                                      fontWeight: FontWeight.w600,
+                                      fontWeight: FontWeight.w800,
                                     ),
                                   ),
                                   Text(
@@ -170,6 +174,8 @@ class _ScrumPageState extends State<ScrumPage> {
                                     style:
                                         TextStyle(fontWeight: FontWeight.w500),
                                   ),
+
+                                  SizedBox(height: 100,)
                                 ],
                               )
                             ],
@@ -182,4 +188,6 @@ class _ScrumPageState extends State<ScrumPage> {
               );
             }));
   }
+
+  String formatDateTime(int dateTimeInt) => "${dateTimeInt.toString().substring(0, 4)}년 ${dateTimeInt.toString().substring(4, 6)}월 ${dateTimeInt.toString().substring(6, 8)}일 ${dateTimeInt.toString().substring(8, 10)}시 ${dateTimeInt.toString().substring(10, 12)}분";
 }
