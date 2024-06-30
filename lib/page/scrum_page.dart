@@ -30,6 +30,13 @@ class _ScrumPageState extends State<ScrumPage> {
                 .doc('team_to_people')
                 .snapshots(),
             builder: (context, snapshot) {
+              // 아직 스냅샷 데이터 못가져 올 때 붉은 에러창 나타나는 것을 로딩 상태로 보이게 함
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+
               var teamData = snapshot.data!.data() as Map<String, dynamic>;
 
               return Card.filled(
@@ -85,7 +92,8 @@ class _ScrumPageState extends State<ScrumPage> {
                                   SizedBox(
                                     width: 20,
                                   ),
-                                  Text(scrumData[index].date)
+                                  Text('int 날짜를 포멧팅한 값을 넣어야함')
+                                  //Text(scrumData[index].date) 
                                 ],
                               ),
 
