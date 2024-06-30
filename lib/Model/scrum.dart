@@ -9,7 +9,6 @@ class Scrum {
   String today;
   String learned;
   int team;
-  String date;
 
   Scrum({
     // required this.image,
