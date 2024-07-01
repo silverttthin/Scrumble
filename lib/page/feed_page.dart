@@ -97,7 +97,7 @@ class _FeedPageState extends State<FeedPage> {
                   child: ListTile(
                     leading: Image(
                       width: 60,
-                      image: AssetImage(
+                      image: AssetImage (
                           'assets/icons/${scrumData[index].icon}.png'),
                     ),
                     title: Padding(
