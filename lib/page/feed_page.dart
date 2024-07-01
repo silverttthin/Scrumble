@@ -52,14 +52,8 @@ class _FeedPageState extends State<FeedPage> {
           .take(num)
           .map((e) => e.key)
           .toList();
-
       return topWords;
     }
-
-    // most_common(
-    //     scrumData[index].learned +
-    //         scrumData[index].today +
-    //         scrumData[index].yesterday, 3)
 
     return Scaffold(
       // floatingActionButton: FloatingActionButton(
@@ -79,129 +73,136 @@ class _FeedPageState extends State<FeedPage> {
         padding: const EdgeInsets.only(top: 15.0, left: 15, right: 15, bottom: 45),
         itemCount: scrumData.length,
         itemBuilder: (context, index) {
-          return Column(
-            children: [
-              Card(
-                // margin: const EdgeInsets.all(16.0),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15)),
-                elevation: 3, // 카드 하단 그림자 크기
-                shadowColor: Colors.black.withOpacity(0.7),
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ScrumPage(index: index)));
-                  },
-                  child: ListTile(
-                    leading: Image(
-                      width: 60,
-                      image: AssetImage (
-                          'assets/icons/${scrumData[index].icon}.png'),
-                    ),
-                    title: Padding(
-                      padding: const EdgeInsets.only(top: 5),
-                      child: StreamBuilder<DocumentSnapshot>(
-                          stream: FirebaseFirestore.instance
-                              .collection('people')
-                              .doc('team_to_people')
-                              .snapshots(),
-                          builder: (context, snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return Text("",
+
+          // 미리 index번째 스크럼의 빈출 단어 변수 만들어두기
+           var tags = most_common(
+              scrumData[index].learned +
+                  scrumData[index].today +
+                  scrumData[index].yesterday, 3);
+
+
+
+          return FutureBuilder(
+            future: tags,
+            builder: (context, snapshot) {
+
+            final arrived_tags = snapshot.data!;
+
+            return Column(
+              children: [
+                Card(
+                  // margin: const EdgeInsets.all(16.0),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15)),
+                  elevation: 3, // 카드 하단 그림자 크기
+                  shadowColor: Colors.black.withOpacity(0.7),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ScrumPage(index: index, tags : arrived_tags)));
+                    },
+                    child: ListTile(
+                      leading: Image(
+                        width: 60,
+                        image: AssetImage (
+                            'assets/icons/${scrumData[index].icon}.png'),
+                      ),
+                      title: Padding(
+                        padding: const EdgeInsets.only(top: 5),
+                        child: StreamBuilder<DocumentSnapshot>(
+                            stream: FirebaseFirestore.instance
+                                .collection('people')
+                                .doc('team_to_people')
+                                .snapshots(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return Text("",
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: const Color(0xFF666666),
+                                    ));
+                              }
+                              var teamData =
+                                  snapshot.data!.data() as Map<String, dynamic>;
+
+                              return Text(
+                                  teamData[scrumData[index].team.toString()],
                                   style: TextStyle(
                                     fontSize: 12,
                                     color: const Color(0xFF666666),
                                   ));
-                            }
-                            var teamData =
-                                snapshot.data!.data() as Map<String, dynamic>;
-
+                            }),
+                      ),
+                      subtitle: FutureBuilder<List<String>>(
+                        future: tags,
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
                             return Text(
-                                teamData[scrumData[index].team.toString()],
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: const Color(0xFF666666),
-                                ));
-                          }),
-                    ),
-                    subtitle: FutureBuilder<List<String>>(
-                      future: most_common(
-                          scrumData[index].learned +
-                              scrumData[index].today +
-                              scrumData[index].yesterday,
-                          3),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return Text(
-                            "Loading...",
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.black.withOpacity(0.7),
-                            ),
-                          );
-                        } else if (snapshot.hasError) {
-                          return Text(
-                            "Error: ${snapshot.error}",
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.black.withOpacity(0.7),
-                            ),
-                          );
-                        } else {
-                          final tags = snapshot.data!;
-                          print(tags);
+                              "Loading...",
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.black.withOpacity(0.7),
+                              ),
+                            );
+                          } else {
+                            final tags = snapshot.data!;
 
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                scrumData[index].summary,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.bold,
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  scrumData[index].summary,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                              ),
 
-                              SizedBox(height: 7,),
-                              Wrap(
-                                spacing : 8,
+                                SizedBox(height: 7,),
+                                Wrap(
+                                  spacing : 8,
 
-                                children: tags.map((tag) {
-                                  return Container(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 4, horizontal: 10.0),
-                                    decoration: BoxDecoration(
-                                      color: Color(0xffdddddd),
-                                      borderRadius: BorderRadius.circular(16.0),
-                                    ),
-                                    child: Text(
-                                      tag,
-                                      style: TextStyle(
-                                          fontSize: 13.0, color: Colors.black),
-                                    ),
-                                  );
-                                }).toList(),
-                              ),
-                              SizedBox(
-                                height: 8,
-                              )
-                            ],
-                          );
-                        }
-                      },
+                                  children: tags.map((tag) {
+                                    return Container(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 4, horizontal: 10.0),
+                                      decoration: BoxDecoration(
+                                        color: Color(0xffdddddd),
+                                        borderRadius: BorderRadius.circular(16.0),
+                                      ),
+                                      child: Text(
+                                        tag,
+                                        style: TextStyle(
+                                            fontSize: 13.0, color: Colors.black),
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                                SizedBox(
+                                  height: 8,
+                                )
+                              ],
+                            );
+                          }
+                        },
+                      ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 15,
-              )
-            ],
+                SizedBox(
+                  height: 15,
+                )
+              ],
+            );
+
+            }
+
+
           );
         },
       ),
