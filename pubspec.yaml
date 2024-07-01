@@ -52,6 +52,7 @@ dependencies:
   image_network: ^2.5.6
   translator: ^1.0.0
   text_analysis: ^1.0.0+2
+  palette_generator: ^0.3.3+3
 
 dev_dependencies:
   flutter_test:

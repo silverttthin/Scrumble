@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:madcamp_week1_mission/constants/colors.dart';
+import 'package:madcamp_week1_mission/page/gallery_page.dart';
 import 'feed_page.dart';
 
 class Tab2Page extends StatefulWidget {
@@ -54,12 +55,7 @@ class _Tab2PageState extends State<Tab2Page> {
                 child: FeedPage(),
               )
             : SliverFillRemaining(
-                child: Center(
-                  child: Text(
-                    'Error: Photo not implemented',
-                    style: TextStyle(fontSize: 20, color: Colors.red),
-                  ),
-                ),
+                child: GalleryPage()
               ),
       ],
     );
