@@ -76,7 +76,7 @@ class _FeedPageState extends State<FeedPage> {
       //   },
       // ),
       body: ListView.builder(
-        padding: const EdgeInsets.all(15.0),
+        padding: const EdgeInsets.only(top: 15.0, left: 15, right: 15, bottom: 45),
         itemCount: scrumData.length,
         itemBuilder: (context, index) {
           return Column(

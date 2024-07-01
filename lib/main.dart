@@ -140,7 +140,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         controller: _motionTabBarController,
         children: [
           ScrumAddPage(),
-          FeedPage(),
+          Tab2Page(),
           const Center(
             child: Text("개요"),
           ),
