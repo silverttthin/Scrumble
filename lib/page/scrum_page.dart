@@ -116,7 +116,7 @@ class _ScrumPageState extends State<ScrumPage> {
                                     padding: EdgeInsets.symmetric(
                                         vertical: 6, horizontal: 12.0),
                                     decoration: BoxDecoration(
-                                      color: Color(0xffdddddd),
+                                      color: Color(0xffeeeeee),
                                       borderRadius: BorderRadius.circular(16.0),
                                     ),
                                     child: Text(
