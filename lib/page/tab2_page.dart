@@ -24,7 +24,7 @@ class _Tab2PageState extends State<Tab2Page> {
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               IconButton(
-                icon: Icon(Icons.grid_on, size: 30),
+                icon: Icon(Icons.grid_on, size: 20),
                 color: _tabbarNum == 1
                     ? MadColor.mainColor
                     : MadColor.secondColor,
@@ -35,7 +35,7 @@ class _Tab2PageState extends State<Tab2Page> {
                 },
               ),
               IconButton(
-                icon: Icon(Icons.photo_library, size: 30,),
+                icon: Icon(Icons.photo_library, size: 20,),
                 color: _tabbarNum == 2
                     ? MadColor.mainColor
                     : MadColor.secondColor,
