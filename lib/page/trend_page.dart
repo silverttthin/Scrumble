@@ -50,9 +50,12 @@ class _trend_pageState extends State<trend_page> {
 
           else if(snapshot.hasData){
             final wordFrequencies = snapshot.data!;
-            print(wordFrequencies);
+            List<Map<String, dynamic>> convertedList = wordFrequencies.entries.map((entry) {
+              return {'word': entry.key, 'value': entry.value};
+            }).toList();
 
-            return Text(wordFrequencies.toString());
+
+            return Text(convertedList.toString());
           }
           else{
             return Center(child: Text('업 없 업 없 업 없'),);
