@@ -70,140 +70,145 @@ class _FeedPageState extends State<FeedPage> {
       //   },
       // ),
       body: ListView.builder(
-        padding: const EdgeInsets.only(top: 15.0, left: 15, right: 15, bottom: 45),
+        padding:
+            const EdgeInsets.only(top: 15.0, left: 15, right: 15, bottom: 45),
         itemCount: scrumData.length,
         itemBuilder: (context, index) {
-
           // 미리 index번째 스크럼의 빈출 단어 변수 만들어두기
-           var tags = most_common(
+          var tags = most_common(
               scrumData[index].learned +
                   scrumData[index].today +
-                  scrumData[index].yesterday, 3);
-
-
+                  scrumData[index].yesterday,
+              3);
 
           return FutureBuilder(
-            future: tags,
-            builder: (context, snapshot) {
+              future: tags,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return CircularProgressIndicator();
+                } else if (snapshot.hasError) {
+                  return Text("Error: ${snapshot.error}");
+                } else {
+                  final arrived_tags = snapshot.data!;
 
-            final arrived_tags = snapshot.data!;
+                  return Column(
+                    children: [
+                      Card(
+                        // margin: const EdgeInsets.all(16.0),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15)),
+                        elevation: 3, // 카드 하단 그림자 크기
+                        shadowColor: Colors.black.withOpacity(0.7),
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ScrumPage(
+                                        index: index, tags: arrived_tags)));
+                          },
+                          child: ListTile(
+                            leading: Image(
+                              width: 60,
+                              image: AssetImage(
+                                  'assets/icons/${scrumData[index].icon}.png'),
+                            ),
+                            title: Padding(
+                              padding: const EdgeInsets.only(top: 5),
+                              child: StreamBuilder<DocumentSnapshot>(
+                                  stream: FirebaseFirestore.instance
+                                      .collection('people')
+                                      .doc('team_to_people')
+                                      .snapshots(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return Text("",
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color: const Color(0xFF666666),
+                                          ));
+                                    }
+                                    var teamData = snapshot.data!.data()
+                                        as Map<String, dynamic>;
 
-            return Column(
-              children: [
-                Card(
-                  // margin: const EdgeInsets.all(16.0),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15)),
-                  elevation: 3, // 카드 하단 그림자 크기
-                  shadowColor: Colors.black.withOpacity(0.7),
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ScrumPage(index: index, tags : arrived_tags)));
-                    },
-                    child: ListTile(
-                      leading: Image(
-                        width: 60,
-                        image: AssetImage (
-                            'assets/icons/${scrumData[index].icon}.png'),
-                      ),
-                      title: Padding(
-                        padding: const EdgeInsets.only(top: 5),
-                        child: StreamBuilder<DocumentSnapshot>(
-                            stream: FirebaseFirestore.instance
-                                .collection('people')
-                                .doc('team_to_people')
-                                .snapshots(),
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.waiting) {
-                                return Text("",
+                                    return Text(
+                                        teamData[
+                                            scrumData[index].team.toString()],
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: const Color(0xFF666666),
+                                        ));
+                                  }),
+                            ),
+                            subtitle: FutureBuilder<List<String>>(
+                              future: tags,
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return Text(
+                                    "Loading...",
                                     style: TextStyle(
                                       fontSize: 12,
-                                      color: const Color(0xFF666666),
-                                    ));
-                              }
-                              var teamData =
-                                  snapshot.data!.data() as Map<String, dynamic>;
+                                      color: Colors.black.withOpacity(0.7),
+                                    ),
+                                  );
+                                } else {
+                                  final tags = snapshot.data!;
 
-                              return Text(
-                                  teamData[scrumData[index].team.toString()],
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: const Color(0xFF666666),
-                                  ));
-                            }),
-                      ),
-                      subtitle: FutureBuilder<List<String>>(
-                        future: tags,
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return Text(
-                              "Loading...",
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.black.withOpacity(0.7),
-                              ),
-                            );
-                          } else {
-                            final tags = snapshot.data!;
-
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  scrumData[index].summary,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    fontSize: 22,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-
-                                SizedBox(height: 7,),
-                                Wrap(
-                                  spacing : 8,
-
-                                  children: tags.map((tag) {
-                                    return Container(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 4, horizontal: 10.0),
-                                      decoration: BoxDecoration(
-                                        color: Color(0xffdddddd),
-                                        borderRadius: BorderRadius.circular(16.0),
-                                      ),
-                                      child: Text(
-                                        tag,
+                                  return Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        scrumData[index].summary,
+                                        overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
-                                            fontSize: 13.0, color: Colors.black),
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
-                                    );
-                                  }).toList(),
-                                ),
-                                SizedBox(
-                                  height: 8,
-                                )
-                              ],
-                            );
-                          }
-                        },
+                                      SizedBox(
+                                        height: 7,
+                                      ),
+                                      Wrap(
+                                        spacing: 8,
+                                        children: tags.map((tag) {
+                                          return Container(
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 4, horizontal: 10.0),
+                                            decoration: BoxDecoration(
+                                              color: Color(0xffdddddd),
+                                              borderRadius:
+                                                  BorderRadius.circular(16.0),
+                                            ),
+                                            child: Text(
+                                              tag,
+                                              style: TextStyle(
+                                                  fontSize: 13.0,
+                                                  color: Colors.black),
+                                            ),
+                                          );
+                                        }).toList(),
+                                      ),
+                                      SizedBox(
+                                        height: 8,
+                                      )
+                                    ],
+                                  );
+                                }
+                              },
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 15,
-                )
-              ],
-            );
-
-            }
-
-
-          );
+                      SizedBox(
+                        height: 15,
+                      )
+                    ],
+                  );
+                }
+              });
         },
       ),
     );
