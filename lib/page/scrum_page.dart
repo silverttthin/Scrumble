@@ -7,18 +7,24 @@ import 'package:madcamp_week1_mission/Model/scrum.dart';
 
 class ScrumPage extends StatefulWidget {
   final int index;
+  final List<String> tags;
 
-  const ScrumPage({super.key, required this.index});
+  const ScrumPage({super.key, required this.index, required this.tags});
 
   @override
   State<ScrumPage> createState() => _ScrumPageState();
 }
 
 class _ScrumPageState extends State<ScrumPage> {
+
   @override
   Widget build(BuildContext context) {
     final scrumData = Provider.of<List<Scrum>>(context);
     int index = widget.index;
+    final tags = widget.tags;
+
+    print(tags);
+
     return Scaffold(
         backgroundColor: MadColor.backgroudColor,
         appBar: AppBar(
@@ -99,6 +105,26 @@ class _ScrumPageState extends State<ScrumPage> {
                                     fontSize: 14
                                   ),)
                                 ],
+                              ),
+
+                              SizedBox(height: 20,),
+                              Wrap(
+                                spacing : 8,
+                                children: tags.map((tag) {
+                                  return Container(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 4, horizontal: 10.0),
+                                    decoration: BoxDecoration(
+                                      color: Color(0xffdddddd),
+                                      borderRadius: BorderRadius.circular(16.0),
+                                    ),
+                                    child: Text(
+                                      tag,
+                                      style: TextStyle(
+                                          fontSize: 13.0, color: Colors.black),
+                                    ),
+                                  );
+                                }).toList(),
                               ),
 
                               SizedBox(
