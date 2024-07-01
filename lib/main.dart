@@ -11,7 +11,6 @@ import 'package:madcamp_week1_mission/firebase_options.dart';
 import 'package:madcamp_week1_mission/page/scrum_add_page.dart';
 import 'package:madcamp_week1_mission/page/scrum_page.dart';
 import 'package:madcamp_week1_mission/page/feed_page.dart';
-import 'package:madcamp_week1_mission/page/tab2.dart';
 import 'package:madcamp_week1_mission/page/tab2_page.dart';
 import 'package:motion_tab_bar/MotionBadgeWidget.dart';
 import 'package:motion_tab_bar/MotionTabBar.dart';
