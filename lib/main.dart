@@ -8,8 +8,9 @@ import 'package:madcamp_week1_mission/constants/colors.dart';
 import 'package:madcamp_week1_mission/firebase_options.dart';
 import 'package:madcamp_week1_mission/page/scrum_add_page.dart';
 import 'package:madcamp_week1_mission/page/scrum_page.dart';
-import 'package:madcamp_week1_mission/page/tab1.dart';
+import 'package:madcamp_week1_mission/page/feed_page.dart';
 import 'package:madcamp_week1_mission/page/tab2.dart';
+import 'package:madcamp_week1_mission/page/tab2_page.dart';
 import 'package:provider/provider.dart';
 
 void main() async{
@@ -55,8 +56,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   List _pages = [
-    tab1(),
-    tab2(),
+    ScrumAddPage(),
+    Tab2Page(),
   ];
   
   @override

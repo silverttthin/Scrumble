@@ -7,33 +7,33 @@ import 'package:madcamp_week1_mission/page/scrum_add_page.dart';
 import 'package:madcamp_week1_mission/page/scrum_page.dart';
 import 'package:provider/provider.dart';
 
-class tab1 extends StatefulWidget {
-  const tab1({super.key});
+class FeedPage extends StatefulWidget {
+  const FeedPage({super.key});
 
   @override
-  State<tab1> createState() => _tab1State();
+  State<FeedPage> createState() => _FeedPageState();
 }
 
-class _tab1State extends State<tab1> {
+class _FeedPageState extends State<FeedPage> {
   @override
   Widget build(BuildContext context) {
     final scrumAddProvider = Provider.of<ScrumAddProvideer>(context);
     final scrumData = Provider.of<List<Scrum>>(context);
 
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: MadColor.mainColor,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
-        child: Icon(
-          Icons.add_outlined,
-          color: Colors.white,
-        ),
-        onPressed: () {
-          scrumAddProvider.initialize();
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => ScrumAddPage()));
-        },
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   backgroundColor: MadColor.mainColor,
+      //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+      //   child: Icon(
+      //     Icons.add_outlined,
+      //     color: Colors.white,
+      //   ),
+      //   onPressed: () {
+      //     scrumAddProvider.initialize();
+      //     Navigator.push(
+      //         context, MaterialPageRoute(builder: (context) => ScrumAddPage()));
+      //   },
+      // ),
       body: ListView.builder(
         padding: const EdgeInsets.all(15.0),
         itemCount: scrumData.length,

@@ -40,9 +40,9 @@ class _ScrumAddPageState extends State<ScrumAddPage> {
         }
       },
       child: Scaffold(
-        appBar: AppBar(
-          title: Text('스크럼 추가하기'),
-        ),
+        // appBar: AppBar(
+        //   title: Text('스크럼 추가하기'),
+        // ),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(15.0),
