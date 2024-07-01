@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:image_network/image_network.dart';
 import 'package:madcamp_week1_mission/constants/colors.dart';
 import 'package:provider/provider.dart';
 import 'package:madcamp_week1_mission/Model/scrum.dart';
@@ -18,7 +19,6 @@ class _ScrumPageState extends State<ScrumPage> {
   Widget build(BuildContext context) {
     final scrumData = Provider.of<List<Scrum>>(context);
     int index = widget.index;
-
     return Scaffold(
         backgroundColor: MadColor.backgroudColor,
         appBar: AppBar(
@@ -116,10 +116,14 @@ class _ScrumPageState extends State<ScrumPage> {
                                           blurRadius: 5)
                                     ]),
                                 child: ClipRRect(
-                                  child: Image.network(
-                                    "https://i.etsystatic.com/27024673/r/il/9af965/3601476621/il_fullxfull.3601476621_nj57.jpg",
-                                    fit: BoxFit.fill,
-                                  ),
+                                  // child: Image.network(
+                                  //   (scrumData[index].url),
+                                  //   fit: BoxFit.fill,
+                                  // ),
+                                  child: Image.network(scrumData[index].url,
+                                    width: double.infinity,
+                                    fit: BoxFit.cover,),
+
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                               ),

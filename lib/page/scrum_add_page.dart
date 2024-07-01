@@ -11,6 +11,7 @@ import 'package:madcamp_week1_mission/Model/human_provider.dart';
 import 'package:madcamp_week1_mission/Model/scrum.dart';
 import 'package:madcamp_week1_mission/Model/scrum_add_provider.dart';
 import 'package:madcamp_week1_mission/constants/colors.dart';
+import 'package:madcamp_week1_mission/page/select_people_page.dart';
 import 'package:provider/provider.dart';
 
 class ScrumAddPage extends StatefulWidget {
@@ -40,12 +41,12 @@ class _ScrumAddPageState extends State<ScrumAddPage> {
         }
       },
       child: Scaffold(
-        // appBar: AppBar(
-        //   title: Text('스크럼 추가하기'),
-        // ),
+    //     appBar: AppBar(
+    //       title: Text('SCRUMBLE'),
+    // ),
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(15.0),
+            padding: const EdgeInsets.only(top: 15.0, left:15, right: 15, bottom: 45.0),
             child: Form(
               key: _formKey,
               child: Column(
@@ -53,7 +54,7 @@ class _ScrumAddPageState extends State<ScrumAddPage> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(left: 15.0),
-                    child: Text('2024년 6월 28일',
+                    child: Text('${DateTime.now().year.toString()}년 ${DateTime.now().month.toString()}월 ${DateTime.now().day.toString()}일',
                       style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold,),
                     ),
                   ),
@@ -81,65 +82,68 @@ class _ScrumAddPageState extends State<ScrumAddPage> {
                         height: 40,
                         child: IconButton(
                           onPressed: (){
+                            // scrumAddProvider.initialize();
+                            Navigator.push(
+                                context, MaterialPageRoute(builder: (context) => SelectPeoplePage()));
 
 
-                            showDialog(
-                                context: context,
-                                barrierDismissible: true,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10.0)),
-                                    //Dialog Main Title
-                                    title: Column(
-                                      children: <Widget>[
-                                        new Text(
-                                          "선택",
-                                          style:
-                                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
-                                    ),
-                                    content: SizedBox(
-                                      height: 250,
-                                      width: 300,
-                                      child:
-                                        ListView.builder(
-                                          scrollDirection: Axis.vertical,
-                                          // padding: EdgeInsets.all(8),
-                                          itemCount: humanData.humanList.length,
-                                          itemBuilder: (context, index){
-                                            return Card(
-                                              child: ListTile(
-                                                leading: Image(
-                                                  width: 30,
-                                                  image: AssetImage(
-                                                      'assets/icons/${humanData.humanList[index].id}.png'),
-                                                ),
-                                                title: Text(humanData.humanList[index].name, style: TextStyle(fontWeight: FontWeight.bold),),
-                                                subtitle: Text(humanData.humanList[index].call, style: TextStyle(color: Color(0xff444444)),),
-                                                onTap: (){
-                                                  scrumAddProvider.setPeople(humanData.humanList[index].name, humanData.humanList[index].id);
-                                                  Navigator.pop(context);
-                                                },
-                                              ),
-                                            );
-                                          },
-                                          // separatorBuilder: (BuildContext context, int index) => const Divider(),
-                                        )
-                                    ),
-                                    actions: <Widget>[
-                                      new ElevatedButton(
-                                        child: new Text("닫기", style: TextStyle(color: Colors.white),),
-                                        style: ElevatedButton.styleFrom(
-                                            backgroundColor: MadColor.mainColor),
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                        },
-                                      ),
-                                    ],
-                                  );
-                                });
+                            // showDialog(
+                            //     context: context,
+                            //     barrierDismissible: true,
+                            //     builder: (BuildContext context) {
+                            //       return AlertDialog(
+                            //         shape: RoundedRectangleBorder(
+                            //             borderRadius: BorderRadius.circular(10.0)),
+                            //         //Dialog Main Title
+                            //         title: Column(
+                            //           children: <Widget>[
+                            //             new Text(
+                            //               "선택",
+                            //               style:
+                            //               TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                            //             ),
+                            //           ],
+                            //         ),
+                            //         content: SizedBox(
+                            //           height: 250,
+                            //           width: 300,
+                            //           child:
+                            //             ListView.builder(
+                            //               scrollDirection: Axis.vertical,
+                            //               // padding: EdgeInsets.all(8),
+                            //               itemCount: humanData.humanList.length,
+                            //               itemBuilder: (context, index){
+                            //                 return Card(
+                            //                   child: ListTile(
+                            //                     leading: Image(
+                            //                       width: 30,
+                            //                       image: AssetImage(
+                            //                           'assets/icons/${humanData.humanList[index].id}.png'),
+                            //                     ),
+                            //                     title: Text(humanData.humanList[index].name, style: TextStyle(fontWeight: FontWeight.bold),),
+                            //                     subtitle: Text(humanData.humanList[index].call, style: TextStyle(color: Color(0xff444444)),),
+                            //                     onTap: (){
+                            //                       scrumAddProvider.setPeople(humanData.humanList[index].name, humanData.humanList[index].id);
+                            //                       Navigator.pop(context);
+                            //                     },
+                            //                   ),
+                            //                 );
+                            //               },
+                            //               // separatorBuilder: (BuildContext context, int index) => const Divider(),
+                            //             )
+                            //         ),
+                            //         actions: <Widget>[
+                            //           new ElevatedButton(
+                            //             child: new Text("닫기", style: TextStyle(color: Colors.white),),
+                            //             style: ElevatedButton.styleFrom(
+                            //                 backgroundColor: MadColor.mainColor),
+                            //             onPressed: () {
+                            //               Navigator.pop(context);
+                            //             },
+                            //           ),
+                            //         ],
+                            //       );
+                            //     });
                           },
                           icon: Icon(Icons.person_add_outlined, color: MadColor.mainColor,),
                         ),
@@ -149,7 +153,7 @@ class _ScrumAddPageState extends State<ScrumAddPage> {
                   SizedBox(height: 5,),
                   Padding(
                     padding: const EdgeInsets.all(10.0),
-                    child: scrumAddProvider.image == null?
+                    child: scrumAddProvider.url == ""?
                     DottedBorder(
                       color: MadColor.mainColor,
                       dashPattern: [19],
@@ -169,7 +173,65 @@ class _ScrumAddPageState extends State<ScrumAddPage> {
                           color: Colors.transparent,
                           child: InkWell(
                             onTap: (){
-                              scrumAddProvider.getImage(ImageSource.gallery);
+                              // scrumAddProvider.getImage(ImageSource.gallery);
+                              humanData.shuffleImage();
+
+
+                              showDialog(
+                                context: context,
+                                barrierDismissible: true,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10.0)),
+                                    //Dialog Main Title
+                                    title: Column(
+                                      children: <Widget>[
+                                        new Text(
+                                          "이미지 선택",
+                                          style:
+                                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                      ),
+                                      ],
+                                    ),
+                                    content: SizedBox(
+                                        height: 250,
+                                        width: 300,
+                                        child:
+                                        GridView.builder(
+                                          itemCount: humanData.imageList.length, //item 개수
+                                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 2, //1 개의 행에 보여줄 item 개수
+                                            mainAxisSpacing: 5, //수평 Padding
+                                          crossAxisSpacing: 5, //수직 Padding
+
+                                        ),
+                                        itemBuilder: (context, index){
+                                          return InkWell(
+                                            onTap: (){
+                                              scrumAddProvider.setImage(humanData.imageList[index].url);
+                                              Navigator.pop(context);
+                                            },
+                                            child: Image.network(
+                                              humanData.imageList[index].url,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          );
+                                        },
+                                      )
+                                    ),
+                                    actions: <Widget>[
+                                      new ElevatedButton(
+                                        child: new Text("닫기", style: TextStyle(color: Colors.white),),
+                                        style: ElevatedButton.styleFrom(
+                                            backgroundColor: MadColor.mainColor),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                });
                             },
                             child: Container(
                               width: double.maxFinite,
@@ -201,7 +263,62 @@ class _ScrumAddPageState extends State<ScrumAddPage> {
                     ):
                     InkWell(
                       onTap: (){
-                        scrumAddProvider.getImage(ImageSource.gallery);
+                        showDialog(
+                            context: context,
+                            barrierDismissible: true,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0)),
+                                //Dialog Main Title
+                                title: Column(
+                                  children: <Widget>[
+                                    new Text(
+                                      "이미지 선택",
+                                      style:
+                                      TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                                content: SizedBox(
+                                    height: 250,
+                                    width: 300,
+                                    child:
+                                    GridView.builder(
+                                      itemCount: humanData.imageList.length, //item 개수
+                                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2, //1 개의 행에 보여줄 item 개수
+                                        mainAxisSpacing: 5, //수평 Padding
+                                        crossAxisSpacing: 5, //수직 Padding
+
+                                      ),
+                                      itemBuilder: (context, index){
+                                        return InkWell(
+                                          onTap: (){
+                                            scrumAddProvider.setImage(humanData.imageList[index].url);
+                                            Navigator.pop(context);
+                                          },
+                                          child: Image.network(
+                                            humanData.imageList[index].url,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        );
+                                      },
+                                    )
+                                ),
+                                actions: <Widget>[
+                                  new ElevatedButton(
+                                    child: new Text("닫기", style: TextStyle(color: Colors.white),),
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor: MadColor.mainColor),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                ],
+                              );
+                            });
+
                       },
                       child: Container(
                         width: double.maxFinite,
@@ -214,7 +331,7 @@ class _ScrumAddPageState extends State<ScrumAddPage> {
                                   blurRadius: 5)
                             ]),
                         child: ClipRRect(
-                          child: Image.file(File(scrumAddProvider.image!.path), fit: BoxFit.fill,),
+                          child: Image.network(scrumAddProvider.url, fit: BoxFit.fill,),
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
@@ -450,6 +567,7 @@ class _ScrumAddPageState extends State<ScrumAddPage> {
                             .snapshots(),
                         builder: (context, snapshot) {
                           if (snapshot.connectionState == ConnectionState.waiting) {
+                            // print('32400000');
                             return Container(
                               width: double.maxFinite,
                               height: 50,
@@ -467,11 +585,26 @@ class _ScrumAddPageState extends State<ScrumAddPage> {
                           var teamData = snapshot.data!.data() as Map<String, dynamic>;
 
                           return InkWell(
-                            onTap: () {
+                            onTap: () async{
                               FocusScope.of(context).requestFocus(new FocusNode());
                               if(scrumAddProvider.name == ""){
                                 Fluttertoast.showToast(
                                     msg: "작성자를 선택해 주세요",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.CENTER,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: Colors.red,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0
+                                );
+
+                                return;
+
+                              }
+
+                              if(scrumAddProvider.url == ""){
+                                Fluttertoast.showToast(
+                                    msg: "이미지를 선택해 주세요",
                                     toastLength: Toast.LENGTH_SHORT,
                                     gravity: ToastGravity.CENTER,
                                     timeInSecForIosWeb: 1,
@@ -491,6 +624,7 @@ class _ScrumAddPageState extends State<ScrumAddPage> {
                                     yesterday: _yesterdayController.text,
                                     today: _todayController.text,
                                     learned: _learnedController.text,
+                                    url: scrumAddProvider.url,
                                     team: teamData[scrumAddProvider.name],
                                     date: parsing_timeToint()
                                 );
@@ -498,7 +632,12 @@ class _ScrumAddPageState extends State<ScrumAddPage> {
                                     .collection('scrums');
                                 contents.add(newScrum.toJson());
 
-                                Navigator.pop(context);
+                                _summaryController.clear();
+                                _yesterdayController.clear();
+                                _todayController.clear();
+                                _learnedController.clear();
+
+                                // Navigator.pop(context);
 
                               }
 

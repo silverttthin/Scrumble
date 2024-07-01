@@ -8,6 +8,7 @@ class Scrum {
   String yesterday;
   String today;
   String learned;
+  String url;
   int team;
   int date;
 
@@ -19,6 +20,7 @@ class Scrum {
     required this.yesterday,
     required this.today,
     required this.learned,
+    required this.url,
     required this.team,
     required this.date,
   });
@@ -39,6 +41,7 @@ class Scrum {
       'yesterday': yesterday,
       'today': today,
       'learned': learned,
+      'url': url,
       'team': team,
       'date': date
     };
@@ -58,6 +61,7 @@ class Scrum {
       yesterday: json['yesterday'],
       today: json['today'],
       learned: json['learned'],
+      url: json['url'],
       team: json['team'],
       date: json['date'],
     );
