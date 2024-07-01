@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:image_network/image_network.dart';
 import 'package:madcamp_week1_mission/constants/colors.dart';
 import 'package:provider/provider.dart';
@@ -113,7 +114,7 @@ class _ScrumPageState extends State<ScrumPage> {
                                 children: tags.map((tag) {
                                   return Container(
                                     padding: EdgeInsets.symmetric(
-                                        vertical: 4, horizontal: 10.0),
+                                        vertical: 6, horizontal: 12.0),
                                     decoration: BoxDecoration(
                                       color: Color(0xffdddddd),
                                       borderRadius: BorderRadius.circular(16.0),
@@ -121,7 +122,7 @@ class _ScrumPageState extends State<ScrumPage> {
                                     child: Text(
                                       tag,
                                       style: TextStyle(
-                                          fontSize: 13.0, color: Colors.black),
+                                          fontSize: 15.0, color: MadColor.mainColor),
                                     ),
                                   );
                                 }).toList(),
@@ -169,10 +170,12 @@ class _ScrumPageState extends State<ScrumPage> {
                                       fontWeight: FontWeight.w800,
                                     ),
                                   ),
-                                  Text(
-                                    scrumData[index].yesterday,
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.w400),
+                                  MarkdownBody(
+                                    data: scrumData[index].yesterday.replaceAll('\n', "  \n"),
+                                    selectable: true,
+                                    // styleSheet: MarkdsownStyleSheet(
+                                    //
+                                    // ),
                                   ),
                                   SizedBox(
                                     height: 30,
@@ -184,10 +187,12 @@ class _ScrumPageState extends State<ScrumPage> {
                                       fontWeight: FontWeight.w800,
                                     ),
                                   ),
-                                  Text(
-                                    scrumData[index].today,
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.w400),
+                                  MarkdownBody(
+                                    data: scrumData[index].today.replaceAll('\n', "  \n"),
+                                    selectable: true,
+                                    // styleSheet: MarkdsownStyleSheet(
+                                    //
+                                    // ),
                                   ),
                                   SizedBox(
                                     height: 30,
@@ -199,11 +204,14 @@ class _ScrumPageState extends State<ScrumPage> {
                                       fontWeight: FontWeight.w800,
                                     ),
                                   ),
-                                  Text(
-                                    scrumData[index].learned,
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.w400),
+                                  MarkdownBody(
+                                    data: scrumData[index].learned.replaceAll('\n', "  \n"),
+                                    selectable: true,
+                                    // styleSheet: MarkdsownStyleSheet(
+                                    //
+                                    // ),
                                   ),
+
 
                                   SizedBox(height: 100,)
                                 ],
