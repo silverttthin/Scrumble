@@ -16,6 +16,8 @@ import 'package:motion_tab_bar/MotionBadgeWidget.dart';
 import 'package:motion_tab_bar/MotionTabBar.dart';
 import 'package:motion_tab_bar/MotionTabBarController.dart';
 import 'package:provider/provider.dart';
+import 'package:madcamp_week1_mission/page/trend_page.dart';
+
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -109,7 +111,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       bottomNavigationBar: MotionTabBar(
         controller: _motionTabBarController, // ADD THIS if you need to change your tab programmatically
         initialSelectedTab: "피드",
-        labels: const ["추가", "피드", "개요"],
+        labels: const ["추가", "피드", "트렌드"],
         icons: const [Icons.add_outlined, Icons.dashboard_outlined, Icons.analytics_outlined],
 
         // optional badges, length must be same with labels
@@ -141,9 +143,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         children: [
           ScrumAddPage(),
           Tab2Page(),
-          const Center(
-            child: Text("개요"),
-          ),
+          trend_page(),
         ],
       ),
       // bottomNavigationBar: BottomNavigationBar(
