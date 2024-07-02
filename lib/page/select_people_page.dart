@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:madcamp_week1_mission/constants/colors.dart';
 import 'package:provider/provider.dart';
 
@@ -31,7 +32,25 @@ class _SelectPeoplePageState extends State<SelectPeoplePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('작성자'),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Text('작성자',
+              style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: MadColor.mainColor
+
+              ),
+            ),
+
+            SizedBox(width: 10,),
+            SvgPicture.asset(
+              'assets/logo.svg',
+              height: 24.0,
+            ),
+          ],
+        ),
       ),
       body: Column(
         children: [
@@ -39,10 +58,10 @@ class _SelectPeoplePageState extends State<SelectPeoplePage> {
             padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 28),
             child: SearchBar(
               leading: Icon(Icons.search),
-              shadowColor: WidgetStatePropertyAll(MadColor.secondColor),
+              shadowColor: MaterialStatePropertyAll(MadColor.secondColor),
               constraints: BoxConstraints(minHeight: 49),
               hintText: "이름을 입력하세요.",
-              hintStyle: WidgetStateProperty.all(TextStyle(color: Colors.grey.shade400)),
+              hintStyle: MaterialStateProperty.all(TextStyle(color: Colors.grey.shade400)),
               onChanged: (value)
               {
                 // setState(() => inputText = value);

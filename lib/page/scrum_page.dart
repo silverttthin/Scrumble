@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:image_network/image_network.dart';
 import 'package:madcamp_week1_mission/constants/colors.dart';
 import 'package:provider/provider.dart';
@@ -29,7 +30,25 @@ class _ScrumPageState extends State<ScrumPage> {
     return Scaffold(
         backgroundColor: MadColor.backgroudColor,
         appBar: AppBar(
-          title: Text('SCRUMBLE'),
+          title:  Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Text('스크럼블',
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: MadColor.mainColor
+
+                ),
+              ),
+              SizedBox(width: 10,),
+
+              SvgPicture.asset(
+                'assets/logo.svg',
+                height: 24.0,
+              ),
+            ],
+          ),
         ),
         body: StreamBuilder<DocumentSnapshot>(
             stream: FirebaseFirestore.instance

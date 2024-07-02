@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:madcamp_week1_mission/Model/Trend.dart';
 import 'package:madcamp_week1_mission/Model/human_provider.dart';
 import 'package:madcamp_week1_mission/Model/scrum.dart';
@@ -114,7 +115,23 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     return Scaffold(
       // body: _pages[_selectedIndex],
       appBar: AppBar(
-        title: Text('SCRUMBLE'),
+        title: Row(
+          children: [
+            SvgPicture.asset(
+              'assets/logo.svg',
+              height: 24.0,
+            ),
+            SizedBox(width: 10,),
+            Text('스크럼블',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: MadColor.mainColor
+
+              ),
+            ),
+          ],
+        ),
       ),
       bottomNavigationBar: MotionTabBar(
         controller: _motionTabBarController, // ADD THIS if you need to change your tab programmatically
