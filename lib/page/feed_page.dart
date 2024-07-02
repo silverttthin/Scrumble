@@ -173,6 +173,7 @@ class _FeedPageState extends State<FeedPage> {
                                       ),
                                       Wrap(
                                         spacing: 8,
+                                        runSpacing: 8,
                                         children: tags.map((tag) {
                                           return Container(
                                             padding: EdgeInsets.symmetric(
