@@ -2,21 +2,24 @@ import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:madcamp_week1_mission/Model/Trend.dart';
 import 'package:madcamp_week1_mission/Model/human_provider.dart';
 import 'package:madcamp_week1_mission/Model/scrum.dart';
 import 'package:madcamp_week1_mission/Model/scrum_add_provider.dart';
 import 'package:madcamp_week1_mission/Model/scrum_provider.dart';
+import 'package:madcamp_week1_mission/Model/trend_provider.dart';
 import 'package:madcamp_week1_mission/constants/colors.dart';
 import 'package:madcamp_week1_mission/firebase_options.dart';
 import 'package:madcamp_week1_mission/page/scrum_add_page.dart';
 import 'package:madcamp_week1_mission/page/scrum_page.dart';
 import 'package:madcamp_week1_mission/page/feed_page.dart';
 import 'package:madcamp_week1_mission/page/tab2_page.dart';
+import 'package:madcamp_week1_mission/page/tab3_page.dart';
 import 'package:motion_tab_bar/MotionBadgeWidget.dart';
 import 'package:motion_tab_bar/MotionTabBar.dart';
 import 'package:motion_tab_bar/MotionTabBarController.dart';
 import 'package:provider/provider.dart';
-import 'package:madcamp_week1_mission/page/trend_page.dart';
+import 'package:madcamp_week1_mission/widget/trend_page.dart';
 
 
 void main() async{
@@ -29,6 +32,7 @@ void main() async{
 
 class MyApp extends StatelessWidget{
   ScrumProvider db = ScrumProvider();
+  TrendProvider trend_db = TrendProvider();
 
   @override
   Widget build(BuildContext context){
@@ -36,6 +40,10 @@ class MyApp extends StatelessWidget{
       providers: [
         StreamProvider<List<Scrum>>.value(
           value: db.getNotes(),
+          initialData: [],
+        ),
+        StreamProvider<List<Trend>>.value(
+          value: trend_db.getTrend(),
           initialData: [],
         ),
         ChangeNotifierProvider(
@@ -143,7 +151,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         children: [
           ScrumAddPage(),
           Tab2Page(),
-          trend_page(),
+          Tab3Page(),
         ],
       ),
       // bottomNavigationBar: BottomNavigationBar(

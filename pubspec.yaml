@@ -53,6 +53,7 @@ dependencies:
   translator: ^1.0.0
   text_analysis: ^1.0.0+2
   palette_generator: ^0.3.3+3
+  word_cloud: ^1.0.3
 
 dev_dependencies:
   flutter_test:

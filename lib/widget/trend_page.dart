@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:text_analysis/text_analysis.dart';
 import 'package:provider/provider.dart';
+import 'package:word_cloud/word_cloud.dart';
 
 import '../Model/scrum.dart';
+import '../constants/colors.dart';
 
 class trend_page extends StatefulWidget {
   const trend_page({super.key});
@@ -12,9 +14,9 @@ class trend_page extends StatefulWidget {
 }
 
 class _trend_pageState extends State<trend_page> {
-  Future<Map<String, int>> collectFrequentWords(
+  Future<Map<String, double>> collectFrequentWords(
       List<String> texts, int minFrequency) async {
-    final Map<String, int> wordFrequencies = {};
+    final Map<String, double> wordFrequencies = {};
 
     for (String text in texts) {
       final textDoc = await TextDocument.analyze(
@@ -25,7 +27,7 @@ class _trend_pageState extends State<trend_page> {
       textDoc.tokens.forEach((token) {
         final word = token.term.replaceAll(RegExp(r'[^\w\s]'), ''); // 특수기호 제거
         if (word.isNotEmpty) {
-          wordFrequencies[word] = (wordFrequencies[word] ?? 0) + 1;
+          wordFrequencies[word] = ((wordFrequencies[word] ?? 0) + 1).toDouble();
         }
       });
     }
@@ -42,8 +44,8 @@ class _trend_pageState extends State<trend_page> {
         .map((scrum) => '${scrum.yesterday}. ${scrum.today}. ${scrum.learned}.')
         .toList();
 
-    return FutureBuilder(
-        future: collectFrequentWords(allScrumTexts, 2),
+    return FutureBuilder<Map<String, double>>(
+        future: collectFrequentWords(allScrumTexts, 1),
         builder: (context, snapshot) {
           if(snapshot.connectionState == ConnectionState.waiting)
             return Center(child: CircularProgressIndicator());
@@ -55,7 +57,19 @@ class _trend_pageState extends State<trend_page> {
             }).toList();
 
 
-            return Text(convertedList.toString());
+
+            WordCloudData wcdata = WordCloudData(data: convertedList);
+
+            return WordCloudView(
+              data: wcdata,
+              maxtextsize: 50,
+              mintextsize: 10,
+              mapcolor: MadColor.mainLight,
+              mapwidth: 300,
+              mapheight: 350,
+              fontWeight: FontWeight.bold,
+              colorlist: [MadColor.mainColor, MadColor.secondColor, Colors.black],
+            );
           }
           else{
             return Center(child: Text('업 없 업 없 업 없'),);
