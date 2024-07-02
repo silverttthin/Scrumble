@@ -111,6 +111,7 @@ class _ScrumPageState extends State<ScrumPage> {
                               SizedBox(height: 20,),
                               Wrap(
                                 spacing : 8,
+                                runSpacing: 8,
                                 children: tags.map((tag) {
                                   return Container(
                                     padding: EdgeInsets.symmetric(
@@ -170,6 +171,7 @@ class _ScrumPageState extends State<ScrumPage> {
                                       fontWeight: FontWeight.w800,
                                     ),
                                   ),
+                                  SizedBox(height: 5,),
                                   MarkdownBody(
                                     data: scrumData[index].yesterday.replaceAll('\n', "  \n"),
                                     selectable: true,
@@ -187,6 +189,7 @@ class _ScrumPageState extends State<ScrumPage> {
                                       fontWeight: FontWeight.w800,
                                     ),
                                   ),
+                                  SizedBox(height: 5,),
                                   MarkdownBody(
                                     data: scrumData[index].today.replaceAll('\n', "  \n"),
                                     selectable: true,
@@ -204,6 +207,7 @@ class _ScrumPageState extends State<ScrumPage> {
                                       fontWeight: FontWeight.w800,
                                     ),
                                   ),
+                                  SizedBox(height: 5,),
                                   MarkdownBody(
                                     data: scrumData[index].learned.replaceAll('\n', "  \n"),
                                     selectable: true,

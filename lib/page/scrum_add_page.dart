@@ -637,6 +637,16 @@ class _ScrumAddPageState extends State<ScrumAddPage> {
                                 _todayController.clear();
                                 _learnedController.clear();
 
+                                Fluttertoast.showToast(
+                                    msg: "스크럼 작성이 완료 되었습니다!",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.CENTER,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: MadColor.mainColor,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0
+                                );
+
                                 // Navigator.pop(context);
 
                               }
